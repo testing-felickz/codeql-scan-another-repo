@@ -83,3 +83,9 @@ jobs:
       uses: github/codeql-action/analyze@v4
       with:
         category: "/language:${{matrix.language}}"
+        #fix error:
+          # Uploading results
+          # Warning: commit not found - https://docs.github.com/rest
+          # Error: commit not found - https://docs.github.com/rest
+        sha: ${{ github.sha }}
+        ref: ${{ github.ref }}
