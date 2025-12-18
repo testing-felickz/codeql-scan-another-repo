@@ -54,10 +54,14 @@ jobs:
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
     steps:
+    - name: Checkout THIS repository to ROOT
+      uses: actions/checkout@v4
+    
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         repository: testing-felickz/hello-py # a different git repo is cloned into the root dir of this runner
+        path: abc/def/ghi
 
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
@@ -71,12 +75,8 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-
-        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
+        #scan the code in this folder + report vulnerable code paths relative to this, not the root
+        source-root: abc/def/ghi        
 
 
     - name: Perform CodeQL Analysis
